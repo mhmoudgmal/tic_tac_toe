@@ -1,5 +1,5 @@
 module TicTacToe
-  class GameStatus
-    
+  module GameStatus
+
   end
 end
