@@ -1,0 +1,41 @@
+TicTacToe
+
+- core:
+  - game board
+    - represent the game as a tuple of cells 1,2,3,4,5,6,7,8,9 ie. array of chars
+    - each idx represent a cell in the board
+    - each cell-idx can hold either 'x' or 'o'
+    - board holds refs of the two players
+
+  - game player
+    - has a name - uniq
+    - has a symbol (x|o)
+
+  - game loop
+    - player1 - ticked on an empty cell
+    - player2 - tacked on another empty cell
+    - game loop checks for the [game status]
+        - block? board complete without [win] status raised
+        - win? three contiguous (vertical|horizontal|diagonal) cells are the same with [x|o]
+
+  - WIN logic?
+    - one way I thought of is to check against all the possible win cells,
+      1-2-3, 1-4-7, 1-5-9, ..etc and inform back whether there is a win status raised or not
+
+    - anther way I came to is to update the possible win cells for each player,
+      each time any player fill an empty cell
+
+      # example:
+        player1 -> tick(1)
+        player1 {POSSIBLE WIN: update} will be [(1,2,3) (1,4,7), (1,5,9)]
+
+        player2 -> tick(5)
+        player2 {POSSIBLE WIN: update} will be [(4,5,6), (2,5,8), (1,5,9), (3,5,7)]
+
+
+        but, when player2 ticked (5),
+        there will be a shared {POSSIBLE WIN} between player1 and player2
+        (1,5,9) -> this means it can be removed from each player {POSSIBLE WINS}
+
+        and so on, until either there is only one {POSSIBLE WIN} for one player,
+        or no {POSSIBLE WIN} for both, in this case there is a block.
