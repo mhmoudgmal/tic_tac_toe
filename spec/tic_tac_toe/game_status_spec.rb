@@ -9,13 +9,12 @@ module TicTacToe
 
     context :game_status_props do
 
-      xit "should respond to block?" do
+      it "should respond to finished?" do
+        expect(GameStatus.method_defined?(:finished?)).to be_truthy
       end
 
-      xit "should respond to win?" do
-      end
-
-      xit "should respond to persisted?" do
+      it "should respond to win?" do
+        expect(GameStatus.method_defined?(:win?)).to be_truthy
       end
 
     end
