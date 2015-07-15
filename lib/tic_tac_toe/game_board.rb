@@ -46,11 +46,14 @@ module TicTacToe
     end
 
 
+
     def check_game_status
       if win?
-        return "return #{@current_player} win!"
+        @status = :win
+        return 'return "Game over, #{@current_player} WIN!"'
       elsif finished?
-        return "return 'BLOCK, play again'"
+        @status = :block
+        return "return 'Game over, BLOCK!'"
       end
 
       ''

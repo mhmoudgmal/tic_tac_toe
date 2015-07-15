@@ -22,6 +22,8 @@ TicTacToe
     - one way I thought of is to check against all the possible win cells,
       1-2-3, 1-4-7, 1-5-9, ..etc and inform back whether there is a win status raised or not
 
+      # This one is easier to think of and to implement
+
     - anther way I came to is to update the possible win cells for each player,
       each time any player fill an empty cell
 
@@ -39,3 +41,6 @@ TicTacToe
 
         and so on, until either there is only one {POSSIBLE WIN} for one player,
         or no {POSSIBLE WIN} for both, in this case there is a block.
+
+      # This one can provide advanced feature,
+      # to congrats the current player if he is going to win even before the game finished!

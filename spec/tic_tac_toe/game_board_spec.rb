@@ -46,16 +46,31 @@ module TicTacToe
         expect {game.update_board(game.players.first, 1)}.to raise_error /Not blank/
       end
 
-      it "should raise finished when the board is filled" do
-        (1..8).to_a.each do |position|
-          game.update_board game.current_player, position
-        end
+      it "should raise GAME OVER when the board is filled ie. block" do
+        game.update_board game.current_player, 1 #x
+        game.update_board game.current_player, 2 #o
+        game.update_board game.current_player, 3 #x
 
-        expect(game.update_board(game.current_player, 9)).to eq('BLOCK, play again')
+        game.update_board game.current_player, 5 #o
+        game.update_board game.current_player, 4 #x
+        game.update_board game.current_player, 6 #o
+
+        game.update_board game.current_player, 8 #x
+        game.update_board game.current_player, 7 #o
+
+        #x
+        expect(game.update_board game.current_player, 9).to eq('Game over, BLOCK!')
+
       end
 
       it "should not accept any further plays after 9 plays" do
+        (1..7).each do |pos|
+          game.update_board game.current_player, pos
+        end
 
+        expect(
+          game.update_board game.current_player, 8
+        ).to eq("Game over, #{game.current_player} WIN!")
       end
     end
   end
