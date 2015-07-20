@@ -10,6 +10,39 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require bootstrap.min
  *= require_tree .
  *= require_self
  */
+
+
+ @font-face {
+   font-family: 'Glyphicons Halflings';
+   src: url('../assets/glyphicons-halflings-regular.eot');
+   src: url('../assets/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
+        url('../assets/glyphicons-halflings-regular.woff') format('woff'),
+        url('../assets/glyphicons-halflings-regular.ttf') format('truetype'),
+        url('../assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+ }
+
+
+ .avatar {
+    height: 50px;
+   	width: 50px;
+   	border-radius:50%;
+   	background: #fff;
+ }
+
+
+.Absolute-Center {
+  width: 50%;
+  height: 50%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+#dynoti{
+  color: red;
+}
