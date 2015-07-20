@@ -1,0 +1,5 @@
+<div align="center">
+  <%= form_for :game, url: new_game_games_path do |f| %>
+    <%= submit_tag 'New Game', class: 'btn btn-warning' %> <u>as</u> (<strong><%= current_user %></strong>)
+  <% end %>
+</div>

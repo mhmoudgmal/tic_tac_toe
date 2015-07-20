@@ -6,7 +6,7 @@ module TicTacToe
 
     def self.included(klass)
       attr_reader :status
-      
+
       klass.instance_variable_set(:@status, nil)
 
       # GameBoard possible win cells commbined

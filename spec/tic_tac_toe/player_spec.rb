@@ -11,7 +11,7 @@ module TicTacToe
     context :player_props do
       it "should maintain instance variable @name" do
         expect(player).to respond_to(:name)
-        expect(player.name).to eq(player.object_id)
+        expect(player.name).to eq(nil)
 
         expect(Player.new("Mhmoud", 'x').name).to eq("Mhmoud")
       end

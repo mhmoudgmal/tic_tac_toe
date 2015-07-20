@@ -1,0 +1,34 @@
+<div class="container">
+
+  <div align="center">
+    <%= image_tag 'xo' %>
+  </div>
+
+
+  <%= render 'new_game' %>
+
+
+  <hr/>
+  <div class="row">
+    <div align="center">
+
+      <% @games.each do |game| %>
+        <% unless game['players'].first == current_user %>
+          <div class="col-md-3">
+            <div class="thumbnail" align="center">
+              <strong><h3><%= game['players'].first %><h3></strong>
+
+              <div class="caption">
+                <% if play_or_watch(game) == 'Play' %>
+                  <%= link_to "Play", join_game_path(game['id']), class: 'btn btn-danger col-md-12' %>
+                <% else %>
+                  <%= link_to "Watch", '#', class: 'btn btn-danger col-md-12' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6">
+
+      <div align="center">
+        <!--  TODO: support playing again -->
+        <!--  Hint: just reset the same record in reids and reload the page for endpoints -->
+        <!--  can be done using -->
+        <%= link_to 'Play again', '#', class: 'btn btn-success' %>
+        <hr/>
+      </div>
+
+      <div class="row">
+        <div id="cell-1" class="cell col-md-4 panel panel-primary">
+        </div>
+        <div id="cell-2" class="cell col-md-4 panel panel-primary">
+        </div>
+        <div id="cell-3" class="cell col-md-4 panel panel-primary">
+        </div>
+      </div>
+
+      <div class="row">
+        <div id="cell-4" class="cell col-md-4 panel panel-primary">
+        </div>
+        <div id="cell-5" class="cell col-md-4 panel panel-primary">
+        </div>
+        <div id="cell-6" class="cell col-md-4 panel panel-primary">
+        </div>
+      </div>
+
+      <div class="row">
+        <div id="cell-7" class="cell col-md-4 panel panel-primary">
+        </div>
+        <div id="cell-8" class="cell col-md-4 panel panel-primary">
+        </div>
+        <div id="cell-9" class="cell col-md-4 panel panel-primary">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3"></div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div align="center">
+        <%= image_tag 'x', class: 'avatar' %>
+        <br>
+        <strong><%= @game['players'].first %></strong>
+      </div>
+    </div>
+
+    <div class='col-md-6'>
+      <div id="current-player-notifier" class='alert alert-warning' align='center'>
+        <div id="dynoti"></div>
+        <strong>
+          <u><%= player_turn %> turn</u>
+        </strong>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div align="center">
+        <%= image_tag 'o', class: 'avatar' %>
+        <br/>
+        <strong><%= @game['players'].second %></strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  Game = {websocket_url: "ws://<%=request.host%>:<%=request.port%>/"};
+
+	$(function(){
+		var player = "<%= current_user %>";
+		var game_id = "<%= params[:id] %>";
+
+		var ticTacToeSocket = new TicTacToeSocket(
+			player,
+			game_id
+		);
+	});
+
+</script>

@@ -1,6 +1,8 @@
 require_relative './game_status'
 require_relative './player'
+require_relative './helper'
 require 'byebug'
+require 'ostruct'
 
 module TicTacToe
   class GameBoard
@@ -8,6 +10,7 @@ module TicTacToe
     attr_reader :board, :players, :current_player
 
     include TicTacToe::GameStatus
+    include TicTacToe::Helper
 
     def initialize
       @board    = Array.new(9, false)
@@ -26,9 +29,10 @@ module TicTacToe
     # without win raised else turn to the next player #change_player.
     def update_board player, position
 
+      raise 'Not your turn' unless player_turn_check(player)
       raise 'Not blank' if board[position-1] != false
 
-      board[position-1] = player.tic_symbol
+      board[position-1] = player_sym player
 
       eval(check_game_status)
 
@@ -43,30 +47,23 @@ module TicTacToe
     def change_player
       @current_player =
         players.reject { |p| p.object_id == @current_player.object_id }.first
+
+      OpenStruct.new({message: "#{@current_player.name} turn", status: :playerchange})
     end
 
 
 
     def check_game_status
       if win?
-        @status = :win
-        return 'return "Game over, #{@current_player} WIN!"'
+        return 'return OpenStruct.new({message:  "GameOver, #{@current_player.name} WIN!", status: :gameover})'
       elsif finished?
-        @status = :block
-        return "return 'Game over, BLOCK!'"
+        return 'return OpenStruct.new({message: "GameOver, BLOCK!", status: :gameover})'
       end
 
       ''
     end
 
-    # FIXME
-    # def alert_player player
-    #   player_turn = players.index(player) == 0 ? 'first' : 'second'
-    #
-    #   puts "#{player_turn} Player (Player-#{current_player.name}) turn.."
-    # end
-
   end
 end
 
-@game = TicTacToe::GameBoard.new
+# @game = TicTacToe::GameBoard.new

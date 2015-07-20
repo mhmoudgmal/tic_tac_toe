@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6">
+      <div align="center">
+        <%= image_tag 'xo' %>
+
+        <%= form_for :game, url: login_games_path, remote: true do |f| %>
+          <fieldset>
+
+            <div align="center">
+              <div id="namerr">
+              </div>
+              <%= text_field_tag 'players[name]', '', placeholder: 'Player Name',
+                                  class: 'input-group form-group col-md-6', id: 'nameinput' %>
+            </div>
+
+            <div align="center">
+                <%= submit_tag 'E N T E R', class: 'btn btn-danger input-group form-group col-md-6' %>
+            </div>
+          </fieldset>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="col-md-3"></div>
+  </div>
+</div>

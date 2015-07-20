@@ -3,7 +3,7 @@ module TicTacToe
       attr_accessor :name, :tic_symbol
 
       def initialize name = nil, tic_symbol
-        @name       = name || self.object_id
+        @name       = name
         @tic_symbol = set_tic_sym tic_symbol
       end
 

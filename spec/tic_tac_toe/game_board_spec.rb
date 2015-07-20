@@ -1,4 +1,5 @@
 require_relative '../../lib/tic_tac_toe/game_board'
+require 'byebug'
 
 module TicTacToe
   describe GameBoard do
@@ -39,11 +40,13 @@ module TicTacToe
       end
 
       it "should not update the already updated cell/position" do
+        # byebug.binding
+
         expect {
           game.update_board(game.players.first, 1)
         }.to change { game.board[0] }.from(false).to(game.players.first.tic_symbol)
 
-        expect {game.update_board(game.players.first, 1)}.to raise_error /Not blank/
+        expect {game.update_board(game.players[1], 1)}.to raise_error /Not blank/
       end
 
       it "should raise GAME OVER when the board is filled ie. block" do
@@ -59,18 +62,23 @@ module TicTacToe
         game.update_board game.current_player, 7 #o
 
         #x
-        expect(game.update_board game.current_player, 9).to eq('Game over, BLOCK!')
+        expect((game.update_board game.current_player, 9).message).to eq('GameOver, BLOCK!')
 
       end
 
       it "should not accept any further plays after 9 plays" do
-        (1..7).each do |pos|
+        (1..6).each do |pos|
           game.update_board game.current_player, pos
         end
 
         expect(
-          game.update_board game.current_player, 8
-        ).to eq("Game over, #{game.current_player} WIN!")
+          (game.update_board game.current_player, 7).message
+        ).to eq("GameOver, #{game.current_player.name} WIN!")
+      end
+
+      it "should raise Not your turn when attempting to update with same player twice" do
+        game.update_board game.players.first, 1
+        expect {game.update_board(game.players.first, 2)}.to raise_error /Not your turn/
       end
     end
   end
