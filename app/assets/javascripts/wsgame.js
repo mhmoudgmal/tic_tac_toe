@@ -15,6 +15,7 @@ SymIcon = function (sym) {
 	return Mustache.render(imgdiv, { sym: sym.toLowerCase() });
 }
 
+
 TicTacToeSocket = function(player, game_id) {
 	this.player = player;
 	this.game_id = game_id;
@@ -23,6 +24,7 @@ TicTacToeSocket = function(player, game_id) {
 
 	this.initBinds();
 };
+
 //
 TicTacToeSocket.prototype.initBinds = function() {
 
