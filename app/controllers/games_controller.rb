@@ -97,7 +97,5 @@ class GamesController < ApplicationController
     gon.game = @game
     gon.game_id = params[:id]
     gon.current_user = current_user
-
-    gon.status = @status
   end
 end

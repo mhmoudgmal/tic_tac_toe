@@ -1,0 +1,9 @@
+# TODO
+
+``Features and issues need to be covered``
+
+* Play again when GameOver
+
+* Watching, support other players to watch the game, and get notified the same as the two players, but can't play!
+
+* Write Tests for the board ui, involve capybara, and other guys
