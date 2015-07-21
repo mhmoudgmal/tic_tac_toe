@@ -1,3 +1,0 @@
-# TicTacToe
-
-Realtime X|O game aka.. TicTacToe - http://https://en.wikipedia.org/wiki/Tic-tac-toe
