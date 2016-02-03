@@ -20,4 +20,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  player:
+    name:
+      exist: 'choose another name, this one already exist'

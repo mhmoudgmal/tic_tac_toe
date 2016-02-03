@@ -2,7 +2,6 @@ require 'tic_tac_toe'
 
 module TicTacToe
   class TicTacToeService
-
     attr_reader :inviter
 
     def initialize player

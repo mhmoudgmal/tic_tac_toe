@@ -1,7 +1,6 @@
 class GamesController < ApplicationController
   include ApplicationHelper
 
-
   layout nil
   before_filter :check_for_player, except: [:login, :landing]
 
@@ -13,25 +12,21 @@ class GamesController < ApplicationController
 
   def index
     # get all game ids from redis to display it
-    all_games_ids = $redis.keys 'game#*'
+    all_games_ids = $redis.keys('game#*')
 
-    # FIXME: enhance to O(1) call instead of iter over the ids and fetch O(n) stmt
-    # Hint: search for redis command
     @games = all_games_ids.map do |game|
-      id = game.split('#').second
-      game_hash = eval($redis.get(game))
-      game_hash['id'] = id
-      game_hash
+      # JSON.parse() is better than eval()
+      # eval is error prone, and not efficient!
+      { 'id' => game.split('#')[1] }.merge(JSON.parse($redis.get(game)).to_hash)
     end
   end
 
-  # FIXME: extract service
+  # TODO: extract service
   def login
     # getting all players
     players = $redis.lrange('players', 0, -1)
 
     if players.include?(game_params["name"])
-      @err = 'choose another name, this one already exist'
       respond_to { |format| format.js }
     else
       # add the player to redis
@@ -44,22 +39,21 @@ class GamesController < ApplicationController
 
       respond_to do |format|
         format.js {
-          render :js => "window.location.href='" + games_path+ "'"
+          render :js => "window.location.href='" + games_path + "'"
         }
       end
     end
   end
 
   def new_game
-    @game = TicTacToe::TicTacToeService.new(session[:player]).play
-    $redis.set("game##{@game.object_id}", @game.to_hash)
+    game = TicTacToe::TicTacToeService.new(session[:player]).play
+    $redis.set("game##{game.object_id}", game.to_hash)
 
-    redirect_to game_path(id: @game.object_id)
+    redirect_to game_path(id: game.object_id)
   end
 
   def show
-    loadGame
-    data_bundle
+    data_bundle(@game = loadGame)
   rescue
     redirect_to games_path
   end
@@ -69,10 +63,14 @@ class GamesController < ApplicationController
   end
 
   def join
-    loadGame
-    @game['players'][1] = session[:player]
+    game = loadGame
+    game['players'][1] = session[:player]
 
-    $redis.set("game##{params[:id]}", @game)
+    if game['current_player'].nil?
+      game['current_player'] = session[:player]
+    end
+
+    $redis.set("game##{params[:id]}", game.to_json)
 
     redirect_to game_path(id: params[:id])
   end
@@ -80,7 +78,7 @@ class GamesController < ApplicationController
   private
 
   def loadGame
-    @game = eval($redis.get("game##{params[:id]}"))
+    JSON.parse($redis.get("game##{params[:id]}")).to_hash
   end
 
   def game_params
@@ -93,8 +91,8 @@ class GamesController < ApplicationController
     end
   end
 
-  def data_bundle
-    gon.game = @game
+  def data_bundle(game)
+    gon.game = game
     gon.game_id = params[:id]
     gon.current_user = current_user
   end

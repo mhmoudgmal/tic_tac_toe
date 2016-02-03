@@ -3,7 +3,6 @@ require 'ostruct'
 
 module TicTacToe
   class UpdateBoardService
-
     attr_reader :game_id, :player, :position
 
     def initialize options
@@ -14,7 +13,7 @@ module TicTacToe
 
     def execute
       game = loadGame
-      updated = game.update_board player, position.to_i
+      updated = game.update_board(player, position.to_i)
 
       $redis.set("game##{game_id}", game.to_hash)
 
@@ -22,15 +21,15 @@ module TicTacToe
 
       updated
     rescue Exception => e
-      return OpenStruct.new({message: e.message, status: :err})
+      return OpenStruct.new({ message: e.message, status: :err })
     end
 
 
     private
 
     def loadGame
-      game_hash = eval($redis.get("game##{game_id}"))
-      TicTacToe::GameBoard.new.from_hash game_hash
+      game_hash = JSON.parse($redis.get("game##{game_id}")).to_hash
+      TicTacToe::GameBoard.new.from_hash(game_hash)
     end
   end
 end
