@@ -1,12 +1,10 @@
 require_relative './game_status'
 require_relative './player'
 require_relative './helper'
-require 'byebug'
 require 'ostruct'
 
 module TicTacToe
   class GameBoard
-
     attr_reader :board, :players, :current_player
 
     include TicTacToe::GameStatus
@@ -14,7 +12,10 @@ module TicTacToe
 
     def initialize
       @board    = Array.new(9, false)
-      @players  = [ Player.new('X'), Player.new('O') ]
+      @players  = [
+        Player.new('X'),
+        Player.new('O')
+      ]
 
       @current_player = @players.first
     end
@@ -28,42 +29,52 @@ module TicTacToe
     # to check whether the +player+ has #win?, or the game has #finshied?
     # without win raised else turn to the next player #change_player.
     def update_board player, position
-
       raise 'Not your turn' unless player_turn_check(player)
-      raise 'Not blank' if board[position-1] != false
+      raise 'Not blank'     unless board[position-1] == false
 
       board[position-1] = player_sym player
 
-      eval(check_game_status)
-
-      change_player
+      check_game_status
     end
 
 
 
     # Changes player after #update_board
-    # Returns::
-    #   current_player after has been changed from first player to second player and vice versa
+    #
+    # @return current_player [Player]
+    #   after it changed from first player to second player and vice versa
     def change_player
-      @current_player =
-        players.reject { |p| p.object_id == @current_player.object_id }.first
+      @current_player = players.reject { |p| p == @current_player }.first
 
-      OpenStruct.new({message: "#{@current_player.name} turn", status: :playerchange})
+      OpenStruct.new(
+        {
+          message: "#{@current_player.name} turn",
+          status: :playerchange
+        }
+      )
     end
 
 
 
     def check_game_status
       if win?
-        return 'return OpenStruct.new({message:  "GameOver, #{@current_player.name} WIN!", status: :gameover})'
+        return OpenStruct.new(
+          {
+            message: WIN_MESSAGE.call(@current_player),
+            status: :gameover
+          }
+        )
       elsif finished?
-        return 'return OpenStruct.new({message: "GameOver, BLOCK!", status: :gameover})'
+        return OpenStruct.new(
+          {
+            message: BLOCK_MESSAGE,
+            status: :gameover
+          }
+        )
+      else
+        change_player
       end
-
-      ''
     end
 
   end
 end
-
-# @game = TicTacToe::GameBoard.new

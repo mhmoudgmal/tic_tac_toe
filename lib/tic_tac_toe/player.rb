@@ -2,6 +2,8 @@ module TicTacToe
   class Player
       attr_accessor :name, :tic_symbol
 
+      SYMBOLS = ['x', 'o'].freeze
+
       def initialize name = nil, tic_symbol
         @name       = name
         @tic_symbol = set_tic_sym tic_symbol
@@ -15,7 +17,7 @@ module TicTacToe
       private
 
       def set_tic_sym sym
-        if sym != nil && ['x', 'o'].include?(sym.downcase)
+        if sym != nil && SYMBOLS.include?(sym.downcase)
           tic_symbol = sym
         else
           raise 'Not supported symbol, only the \'x\' and \'o\' are supported'

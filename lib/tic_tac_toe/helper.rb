@@ -1,19 +1,21 @@
 module TicTacToe
   module Helper
     def to_hash
-      hash = {}
-      hash["board"] = board
-      hash["players"] = players.map(&:name)
-      hash["current_player"] = current_player.name
-      hash
+      {}.tap do |game|
+        game["board"]          = board
+        game["players"]        = players.map(&:name)
+        game["current_player"] = current_player.name
+      end.to_json
     end
 
-    def from_hash hash
+    def from_hash(hash)
       @board = hash['board']
       @players.first.name = hash['players'][0]
       @players.second.name = hash['players'][1]
-      @current_player = @players.first.name == hash['current_player'] ?
-                        @players.first : @players.second
+
+      @current_player = @players.select { |p|
+        p.name == hash['current_player']
+      }.first
 
       self
     end
@@ -34,7 +36,5 @@ module TicTacToe
         current_player == player
       end
     end
-
-
   end
 end
