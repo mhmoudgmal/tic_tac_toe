@@ -32,6 +32,8 @@ gem 'gon'
 gem 'puma'
 # Ruby web socket gem
 gem 'faye-websocket'
+# RSpec formatter
+gem 'fuubar'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
