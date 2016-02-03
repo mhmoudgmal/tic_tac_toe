@@ -19,8 +19,11 @@
               <strong><h3><%= game['players'].first %><h3></strong>
 
               <div class="caption">
-                <% if play_or_watch(game) == 'Play' %>
-                  <%= link_to "Play", join_game_path(game['id']), class: 'btn btn-danger col-md-12' %>
+                <% status = play_or_watch(game) %>
+                <% if status == 'Play' %>
+                  <%= link_to status, join_game_path(game['id']), class: 'btn btn-danger col-md-12' %>
+                <% elsif status == 'Continue' %>
+                  <%= link_to status, join_game_path(game['id']), class: 'btn btn-danger col-md-12' %>
                 <% else %>
                   <%= link_to "Watch", '#', class: 'btn btn-danger col-md-12' %>
                 <% end %>
