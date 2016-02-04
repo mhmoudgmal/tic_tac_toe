@@ -18,6 +18,8 @@ module TicTacToe
       ]
 
       @current_player = @players.first
+
+      yield self if block_given?
     end
 
 

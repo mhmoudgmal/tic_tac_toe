@@ -9,9 +9,9 @@ module TicTacToe
     end
 
     def play
-      game = TicTacToe::GameBoard.new
-      game.players[0].name = inviter
-      game
+      TicTacToe::GameBoard.new do |game_board|
+        game_board.players[0].name = inviter
+      end
     end
   end
 end
