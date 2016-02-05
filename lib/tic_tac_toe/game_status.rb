@@ -33,7 +33,7 @@ module TicTacToe
     # A Boolean representing whether the GameBoard#current_player won the game
     def win?
       GameBoard::POSSIBLE_WIN_CELLS.each do |possible_win|
-        if possible_win.map{|p| p - 1}.all? {|cell| board[cell] == @current_player.tic_symbol}
+        if possible_win.all? {|cell| board[cell] == @current_player.tic_symbol}
           return true
         end
       end
@@ -46,7 +46,7 @@ module TicTacToe
     # [Returns]
     # A Boolean representing whether all board calls get filled without #win? status raised
     def finished?
-      !board.include?(false)
+      !board[1..-1].include?(false)
     end
 
   end

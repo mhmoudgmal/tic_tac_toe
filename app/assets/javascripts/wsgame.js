@@ -81,7 +81,7 @@ TicTacToeSocket.prototype.playerchange = function(msg) {
 
 //
 TicTacToeSocket.prototype.boardchange = function(msg) {
-	var position = "#cell-" + parseInt(msg[msg.length-1]);
+	var position = "#cell-" + parseInt(msg[msg.length - 1]);
 	$(position).html(SymIcon(msg[0]));
 };
 

@@ -17,7 +17,7 @@ module TicTacToe
 
       $redis.set("game##{game_id}", game.to_hash)
 
-      updated.action = "#{game.board[position.to_i - 1]} at #{position.to_i}"
+      updated.action = "#{game.board[position.to_i]} at #{position.to_i}"
 
       updated
     rescue Exception => e

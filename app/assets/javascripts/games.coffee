@@ -6,5 +6,5 @@ $ ->
   # init the baord
   if gon?
     for p in [1..9]
-      if gon.game['board'][p-1] != false
-        $(SymIcon(gon.game['board'][p-1].toLowerCase())).appendTo($("#cell-#{p}"))
+      if gon.game['board'][p] != false
+        $(SymIcon(gon.game['board'][p].toLowerCase())).appendTo($("#cell-#{p}"))

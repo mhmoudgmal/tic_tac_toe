@@ -12,7 +12,7 @@ module TicTacToe
 
       it "should have a board structure, 9 cell boolean based to indicate if it's blank or not" do
         expect(game).to respond_to(:board)
-        expect(game.board).to eq(Array.new(9, false))
+        expect(game.board).to eq(Array.new(10, false))
       end
 
       it "should hold an array of (two) players Player instances" do
@@ -40,7 +40,7 @@ module TicTacToe
 
       it "should not update the already updated cell/position" do
         expect { game.update_board(game.players.first, 1) }
-          .to change { game.board[0] }
+          .to change { game.board[1] }
           .from(false)
           .to(game.players.first.tic_symbol)
 

@@ -11,7 +11,7 @@ module TicTacToe
     include TicTacToe::Helper
 
     def initialize
-      @board    = Array.new(9, false)
+      @board    = Array.new(10, false)
       @players  = [
         Player.new('X'),
         Player.new('O')
@@ -32,9 +32,9 @@ module TicTacToe
     # without win raised else turn to the next player #change_player.
     def update_board player, position
       raise 'Not your turn' unless player_turn_check(player)
-      raise 'Not blank'     unless board[position-1] == false
+      raise 'Not blank'     unless board[position] == false
 
-      board[position-1] = player_sym player
+      board[position] = player_sym player
 
       check_game_status
     end
