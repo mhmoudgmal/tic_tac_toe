@@ -75,6 +75,12 @@ class GamesController < ApplicationController
     redirect_to game_path(id: params[:id])
   end
 
+  def continue
+    game = loadGame
+
+    redirect_to game_path(id: params[:id])
+  end
+
   private
 
   def loadGame

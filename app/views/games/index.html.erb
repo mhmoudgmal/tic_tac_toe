@@ -23,7 +23,7 @@
                 <% if status == 'Play' %>
                   <%= link_to status, join_game_path(game['id']), class: 'btn btn-danger col-md-12' %>
                 <% elsif status == 'Continue' %>
-                  <%= link_to status, join_game_path(game['id']), class: 'btn btn-danger col-md-12' %>
+                  <%= link_to status, continue_game_path(game['id']), class: 'btn btn-danger col-md-12' %>
                 <% else %>
                   <%= link_to "Watch", '#', class: 'btn btn-danger col-md-12' %>
                 <% end %>
